@@ -64,4 +64,24 @@ public class UserController {
         return ResponseEntity.noContent().build();
     }
 
+    @GetMapping("/search")
+    public ResponseEntity<List<User>> searchUsers(
+            @RequestParam(value = "firstName", required = false) String firstName,
+            @RequestParam(value = "lastName", required = false) String lastName
+    ) {
+        List<User> users;
+
+        if (firstName != null && lastName != null) {
+            users = userService.searchUsersByFirstNameAndLastName(firstName, lastName);
+        } else if (firstName != null) {
+            users = userService.searchUsersByFirstName(firstName);
+        } else if (lastName != null) {
+            users = userService.searchUsersByLastName(lastName);
+        } else {
+            users = userService.getAllUsers();
+        }
+
+        return ResponseEntity.ok(users);
+    }
+
 }

@@ -1,7 +1,14 @@
 package com.exercise.userapp.repository;
 
 import com.exercise.userapp.model.User;
-import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface UserRepository extends CrudRepository<User, Integer> {
+import java.util.List;
+
+public interface UserRepository extends JpaRepository<User, Integer> {
+    List<User> findByFirstNameAndLastName(String firstName, String lastName);
+
+    List<User> findByFirstName(String firstName);
+
+    List<User> findByLastName(String lastName);
 }

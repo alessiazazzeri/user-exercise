@@ -15,4 +15,10 @@ public interface UserService {
     User updateUser(Integer userId, User user);
 
     void deleteUser(Integer userId);
+    List<User> searchUsersByFirstNameAndLastName(String firstName, String lastName);
+
+    List<User> searchUsersByFirstName(String firstName);
+
+    List<User> searchUsersByLastName(String lastName);
+
 }
