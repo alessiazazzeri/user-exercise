@@ -5,8 +5,12 @@ import com.exercise.userapp.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.net.URI;
 import java.util.List;
 
@@ -83,5 +87,32 @@ public class UserController {
 
         return ResponseEntity.ok(users);
     }
+
+    @PostMapping("/import")
+    public ResponseEntity<String> importUsers(@RequestParam("file") MultipartFile file) {
+        try {
+            InputStream inputStream = file.getInputStream();
+            BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
+
+            String line;
+            while ((line = reader.readLine()) != null) {
+                String[] data = line.split(",");
+                if (data.length >= 4) {
+                    User user = new User();
+                    user.setFirstName(data[0]);
+                    user.setLastName(data[1]);
+                    user.setEmail(data[2]);
+                    user.setAddress(data[3]);
+
+                    userService.createUser(user);
+                }
+            }
+
+            return ResponseEntity.ok("Dati CSV importati con successo");
+        } catch (Exception e) {
+            return ResponseEntity.internalServerError().build();
+        }
+    }
+
 
 }
