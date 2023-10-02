@@ -175,3 +175,8 @@ Content-Type: multipart/form-data
 [file] (file CSV): users.csv
 ```
 
+**Esempio di Risposta:**
+
+```http
+Dati CSV importati con successo
+```
