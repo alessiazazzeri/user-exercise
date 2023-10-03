@@ -1,8 +1,8 @@
 # Esercizio Gestione Utenti
 
 ## Requisiti di Sistema
-* Java: JDK 17 o versione successiva
-* Database: Configurazione di un database MySQL con nome db_userapp
+* Java: JDK 17 
+* Database: MySQL
 
 ## Istruzioni di installazione
 1. Configurare il database:
@@ -179,4 +179,88 @@ Content-Type: multipart/form-data
 
 ```http
 Dati CSV importati con successo
+```
+
+### 7. Ottieni Utenti con Filtri
+
+**URL:** `/api/users/search`
+
+**Metodo HTTP:** GET
+
+**Descrizione:** Ottieni una lista di utenti filtrati per nome, cognome o entrambi.
+
+**Parametri della Richiesta:**
+
+- `firstName` (Opzionale, Tipo: stringa) - Filtra gli utenti per nome.
+- `lastName` (Opzionale, Tipo: stringa) - Filtra gli utenti per cognome.
+
+**Esempio di Richiesta (Filtro per Nome):**
+
+```http
+GET /api/users/search?firstName=John
+```
+
+**Esempio di Risposta (Filtro per Nome)**
+```json
+[
+  {
+    "id": 1,
+    "firstName": "John",
+    "lastName": "Doe",
+    "email": "john.doe@example.com",
+    "address": "123 Main St"
+  },
+  {
+    "id": 2,
+    "firstName": "John",
+    "lastName": "Smith",
+    "email": "john.smith@example.com",
+    "address": "456 Elm St"
+  }
+]
+```
+
+**Esempio di Richiesta (Filtro per Cognome):**
+
+```http
+GET /api/users/search?lastName=Smith
+```
+
+**Esempio di Risposta (Filtro per Cognome)**
+```json
+[
+  {
+    "id": 2,
+    "firstName": "John",
+    "lastName": "Smith",
+    "email": "john.smith@example.com",
+    "address": "456 Elm St"
+  },
+  {
+    "id": 3,
+    "firstName": "Alice",
+    "lastName": "Smith",
+    "email": "alice.smith@example.com",
+    "address": "789 Oak St"
+  }
+]
+```
+
+**Esempio di Richiesta (Filtro per Nome e Cognome):**
+
+```http
+GET /api/users/search?firstName=John&lastName=Doe
+```
+
+**Esempio di Risposta (Filtro per Nome e Cognome)**
+```json
+[
+  {
+    "id": 1,
+    "firstName": "John",
+    "lastName": "Doe",
+    "email": "john.doe@example.com",
+    "address": "123 Main St"
+  }
+]
 ```
